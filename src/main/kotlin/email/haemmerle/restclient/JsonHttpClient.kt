@@ -10,6 +10,7 @@ import com.github.kittinunf.fuel.httpPost
 import com.github.kittinunf.result.Result
 import org.apache.logging.log4j.LogManager
 import java.nio.charset.StandardCharsets
+import kotlin.text.Charsets.UTF_8
 
 class JsonHttpClient(val hostBaseUrl: String, val authorizer: AuthorizationMethod = NullAuthorizer) {
 
@@ -58,7 +59,7 @@ class JsonHttpClient(val hostBaseUrl: String, val authorizer: AuthorizationMetho
     }
 
     inline fun <reified T> performJsonGetRequest(path: String): T? {
-        return Klaxon().parse(performJsonGetRequest(path).toString(Charsets.UTF_8))
+        return Klaxon().parse(performJsonGetRequest(path).toString(UTF_8))
     }
 
     fun performJsonGetRequest(path: String): ByteArray {
@@ -70,6 +71,10 @@ class JsonHttpClient(val hostBaseUrl: String, val authorizer: AuthorizationMetho
         val (_, response, result) = request.response()
         handleFailure(response, result)
         return result.get()
+    }
+
+    inline fun <reified T> performJsonPostReqeust(path: String, body: String = ""): T? {
+        return Klaxon().parse(performJsonPostRequest(path, body).toString(UTF_8));
     }
 
     fun performJsonPostRequest(path: String, body: String = ""): ByteArray {
