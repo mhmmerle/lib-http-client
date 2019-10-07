@@ -73,7 +73,7 @@ class JsonHttpClient(val hostBaseUrl: String, val authorizer: AuthorizationMetho
         return result.get()
     }
 
-    inline fun <reified T> performJsonPostReqeust(path: String, body: String = ""): T? {
+    inline fun <reified T> performJsonPostRequest(path: String, body: String = ""): T? {
         return Klaxon().parse(performJsonPostRequest(path, body).toString(UTF_8));
     }
 
